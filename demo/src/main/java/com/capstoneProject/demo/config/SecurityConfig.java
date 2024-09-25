@@ -3,6 +3,7 @@ package com.capstoneProject.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -13,13 +14,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/").permitAll()  // Allow access to the home page
-                                .anyRequest().authenticated()       // Other endpoints require authentication
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/css/**", "/img/**").permitAll()  // Permit access to static resources and home page
+                        .anyRequest().authenticated()  // All other requests require authentication
                 )
-                .formLogin(withDefaults())  // Enable form login with default configuration
-                .logout(withDefaults());    // Enable logout with default configuration
+                .formLogin(form -> form
+                        .loginPage("/login")  // Custom login page
+                        .permitAll()  // Permit everyone to see the login page
+                )
+                .logout(LogoutConfigurer::permitAll);  // Allow logging out for all users
+
 
         return http.build();
     }
