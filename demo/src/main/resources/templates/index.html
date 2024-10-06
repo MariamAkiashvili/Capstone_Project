@@ -1,98 +1,187 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<!--  <link rel="stylesheet" th:href="@{/css/styles.css}" />-->
+<!--  <title>University Library</title>-->
+<!--  <script>-->
+<!--    async function loadMaterials() {-->
+<!--        try {-->
+<!--            const response = await fetch('/material/public');-->
+<!--            if (!response.ok) {-->
+<!--                throw new Error('Network response was not ok');-->
+<!--            }-->
+<!--            const materials = await response.json();-->
+<!--            displayMaterials(materials);-->
+<!--        } catch (error) {-->
+<!--            console.error('Error fetching materials:', error);-->
+<!--        }-->
+<!--    }-->
+
+<!--    function displayMaterials(materials) {-->
+<!--        const cardsContainer = document.querySelector('.cards');-->
+<!--        materials.forEach(material => {-->
+<!--            const card = document.createElement('div');-->
+<!--            card.classList.add('card');-->
+<!--            card.innerHTML = `-->
+<!--                <span class="content">-->
+<!--                    <img src="/img/calcullus.png" alt="${material.materialName}" />-->
+<!--                    <p>${material.materialName} (English)</p>-->
+<!--                </span>-->
+<!--                <span class="actions">-->
+<!--                    <img src="/img/Vision.png" alt="View" />-->
+<!--                    <img src="/img/Export%20Pdf.png" alt="Download" style="pointer-events: none; opacity: 0.5;" />-->
+<!--                    <a href="book-details.html">-->
+<!--                        <img src="/img/Bulleted%20List.png" alt="Details" />-->
+<!--                    </a>-->
+<!--                </span>-->
+<!--            `;-->
+<!--            cardsContainer.appendChild(card);-->
+<!--        });-->
+<!--    }-->
+
+<!--    window.onload = loadMaterials;-->
+<!--  </script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:replace="fragments/header :: header">-->
+<!--</div>-->
+<!--<main>-->
+<!--  <section>-->
+<!--    <form>-->
+<!--      <input type="text" placeholder="Search" />-->
+<!--      <select>-->
+<!--        <option value="(Choose Faculty)">(Choose Faculty)</option>-->
+<!--      </select>-->
+<!--      <select>-->
+<!--        <option value="(Choose Course)">(Choose Course)</option>-->
+<!--      </select>-->
+<!--      <select>-->
+<!--        <option value="">(Choose Lecturer)</option>-->
+<!--      </select>-->
+<!--      <select>-->
+<!--        <option value="(Choose Group)">(Choose Group)</option>-->
+<!--      </select>-->
+<!--      <button type="submit">Submit</button>-->
+<!--    </form>-->
+<!--    <div class="cards"></div>-->
+<!--  </section>-->
+<!--</main>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="/">
-    <link rel="stylesheet"  href="/static/styles.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <title>University Library</title>
+  <script>
+    async function loadMaterials() {
+        try {
+            const response = await fetch('/material/public');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const materials = await response.json();
+            displayMaterials(materials);
+        } catch (error) {
+            console.error('Error fetching materials:', error);
+        }
+    }
+
+    function displayMaterials(materials) {
+        const cardsContainer = document.querySelector('.cards');
+        materials.forEach(material => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+                <span class="content">
+                    <img src="/img/calcullus.png" alt="${material.materialName}" />
+                    <p>${material.materialName} (English)</p>
+                </span>
+                <span class="actions">
+                    <img src="/img/Vision.png" alt="View" />
+                    <img src="/img/Export%20Pdf.png" alt="Download" style="pointer-events: none; opacity: 0.5;" />
+                    <a href="book-details.html">
+                        <img src="/img/Bulleted%20List.png" alt="Details" />
+                    </a>
+                </span>
+            `;
+            cardsContainer.appendChild(card);
+        });
+    }
+
+    window.onload = loadMaterials;
+  </script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main>
+  <section>
+    <form>
+      <input type="text" placeholder="Search" />
+      <select>
+        <option value="(Choose Faculty)">(Choose Faculty)</option>
+      </select>
+      <select>
+        <option value="(Choose Course)">(Choose Course)</option>
+      </select>
+      <select>
+        <option value="">(Choose Lecturer)</option>
+      </select>
+      <select>
+        <option value="(Choose Group)">(Choose Group)</option>
+      </select>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="cards"></div>
+  </section>
+</main>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Login</h2>
+    <form action="/login" method="post">
       <div>
-        <img src="img/Homework.png" alt="" />
-        <h1>University Library</h1>
+        <label for="username">Email</label>
+        <input type="text" name="username" required />
       </div>
       <div>
-        <div>
-          <a href="profile.html">
-            <img src="img/Person.png" alt="" />
-            <p>Mariam Akiashvili</p>
-          </a>
-        </div>
-        <a href="login.html"><img src="img/Logout.png" alt="" /></a>
+        <label for="password">Password</label>
+        <input type="password" name="password" required />
       </div>
-    </header>
-    <main>
-      <section>
-        <form class="course-search">
-          <input type="text" placeholder="Search" />
-          <select name="" id="">
-            <option value="(Choose Faculty)">(Choose Faculty)</option>
-          </select>
-          <select name="" id="">
-            <option value="(Choose Course)">(Choose Course)</option>
-          </select>
-          <select name="" id="">
-            <option value="">(Choose Lecturer)</option>
-          </select>
-          <select name="" id="">
-            <option value="(Choose Group)">(Choose Group)</option>
-          </select>
-          <button>Submit</button>
-        </form>
-        <div class="cards">
-          <div class="card">
-            <span class="content">
-              <img src="img/calcullus.png" alt="" />
-              <p>Calculus: Early Transcendentals by James Stewart (English)</p>
-            </span>
-            <span class="actions"
-              ><img src="img/Vision.png" alt="" />
-              <img src="img/Export Pdf.png" alt="" />
-              <a href="book-details.html">
-                <img src="img/Bulleted List.png" alt="" /></a
-            ></span>
-          </div>
-          <div class="card">
-            <span class="content">
-              <img src="img/calcullus.png" alt="" />
-              <p>Calculus: Early Transcendentals by James Stewart (English)</p>
-            </span>
-            <span class="actions"
-              ><img src="img/Vision.png" alt="" />
-              <img src="img/Export Pdf.png" alt="" />
-              <a href="book-details.html">
-                <img src="img/Bulleted List.png" alt=""
-              /></a>
-            </span>
-          </div>
-          <div class="card">
-            <span class="content">
-              <img src="img/calcullus.png" alt="" />
-              <p>Calculus: Early Transcendentals by James Stewart (English)</p>
-            </span>
-            <span class="actions"
-              ><img src="img/Vision.png" alt="" />
-              <img src="img/Export Pdf.png" alt="" />
-              <a href="book-details.html">
-                <img src="img/Bulleted List.png" alt="" /></a
-            ></span>
-          </div>
-          <div class="card">
-            <span class="content">
-              <img src="img/calcullus.png" alt="" />
-              <p>Calculus: Early Transcendentals by James Stewart (English)</p>
-            </span>
-            <span class="actions"
-              ><img src="img/Vision.png" alt="" />
-              <img src="img/Export Pdf.png" alt="" />
-              <a href="book-details.html">
-                <img src="img/Bulleted List.png" alt="" /></a
-            ></span>
-          </div>
-        </div>
-      </section>
-    </main>
-  </body>
+      <div class="submit">
+        <button type="submit">Log In</button>
+        <p><a href="/forgot-password">Forget Password</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('loginModal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('loginModal').style.display = 'none';
+  }
+
+  // Check authentication status (example logic)
+  window.onload = function () {
+    // Simulate checking if the user is authenticated
+    const isAuthenticated = false; // Replace with actual authentication check
+
+    if (!isAuthenticated) {
+      openModal(); // Open the modal if not authenticated
+    }
+  };
+</script>
+
+</body>
 </html>

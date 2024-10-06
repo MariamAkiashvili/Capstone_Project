@@ -19,8 +19,40 @@ public class StudentGroup {
 
     @ManyToOne
     @JoinColumn(name = "group_id", referencedColumnName = "university_group_id", nullable = false)
-    private Group group;
+    private Group universityGroup;
 
     @Column(name = "added_date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime addedDate;
+
+    public long getStudentGroupId() {
+        return studentGroupId;
+    }
+
+    public void setStudentGroupId(long studentGroupId) {
+        this.studentGroupId = studentGroupId;
+    }
+
+    public UniversityUser getStudent() {
+        return student;
+    }
+
+    public void setStudent(UniversityUser student) {
+        this.student = student;
+    }
+
+    public Group getGroup() {
+        return universityGroup;
+    }
+
+    public void setGroup(Group group) {
+        this.universityGroup = group;
+    }
+
+    public LocalDateTime getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(LocalDateTime addedDate) {
+        this.addedDate = addedDate;
+    }
 }

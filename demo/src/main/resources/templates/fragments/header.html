@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<header th:fragment="header">
+    <div>
+        <a th:href="@{/index}">
+            <img th:src="@{/img/Homework.png}" alt="Home" />
+            <h1>University Library</h1>
+        </a>
+    </div>
+    <div>
+        <div>
+            <a th:href="@{/profile}">
+                <img th:src="@{/img/Person.png}" alt="Profile" />
+                <p>Mariam Akiashvili</p>
+            </a>
+        </div>
+        <img th:src="@{/img/Logout.png}" alt="Logout" />
+    </div>
+</header>
+</body>
+</html>

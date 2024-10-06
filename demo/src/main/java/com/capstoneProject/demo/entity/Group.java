@@ -10,7 +10,7 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "university_group_id")
-    private long university_group_id;
+    private long universityGroupId;
 
     @Column(name = "university_group_name", nullable = false, length = 100)
     private String name;
@@ -19,7 +19,7 @@ public class Group {
     private String code;
 
     public long getId(){
-        return this.university_group_id;
+        return this.universityGroupId;
     }
 
     public String getName() {

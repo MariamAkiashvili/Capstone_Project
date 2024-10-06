@@ -38,7 +38,7 @@ public class StudentAdditionalInfo {
         this.course = course;
     }
 
-    public boolean isHasActiveStatus() {
+    public boolean getHasActiveStatus() {
         return hasActiveStatus;
     }
 

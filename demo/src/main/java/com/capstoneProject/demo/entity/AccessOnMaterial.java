@@ -23,4 +23,36 @@ public class AccessOnMaterial {
     @JoinColumn(name = "access_type_code", referencedColumnName = "access_type_code", nullable = false)
     private AccessType accessType;
 
+
+    public long getAccessOnMaterialId() {
+        return accessOnMaterialId;
+    }
+
+    public void setAccessOnMaterialId(long accessOnMaterialId) {
+        this.accessOnMaterialId = accessOnMaterialId;
+    }
+
+    public AccessType getAccessType() {
+        return accessType;
+    }
+
+    public void setAccessType(AccessType accessType) {
+        this.accessType = accessType;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 }

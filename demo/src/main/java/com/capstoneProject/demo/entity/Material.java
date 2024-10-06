@@ -3,6 +3,7 @@ package com.capstoneProject.demo.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @Table(name = "material")
@@ -27,11 +28,17 @@ public class Material {
 
     @ManyToOne
     @JoinColumn(name = "uploaded_by_user_id", referencedColumnName = "university_user_id", nullable = false)
-    private UniversityUser universityUser;
+    private UniversityUser uploadedByUserId;
 
 
     @Column(name = "link", length = 1000)
     private String link;
+
+    @Column(name = "is_online_material", columnDefinition = "boolean default false")
+    private boolean isOnlineMaterial;
+
+    @Column(name = "s3_address")
+    private String s3Address;
 
 
     public long getMaterialId() {
@@ -75,11 +82,11 @@ public class Material {
     }
 
     public UniversityUser getUniversityUser() {
-        return universityUser;
+        return uploadedByUserId;
     }
 
     public void setUniversityUser(UniversityUser universityUser) {
-        this.universityUser = universityUser;
+        this.uploadedByUserId = universityUser;
     }
 
     public String getLink() {
@@ -88,5 +95,21 @@ public class Material {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public boolean getIsOnlineMaterial(){
+        return isOnlineMaterial;
+    }
+
+    public void setIsOnlineMaterial(boolean isOnlineMaterial){
+        this.isOnlineMaterial = isOnlineMaterial;
+    }
+
+    public String getS3Address() {
+        return s3Address;
+    }
+
+    public void setS3Address(String s3Address) {
+        this.s3Address = s3Address;
     }
 }

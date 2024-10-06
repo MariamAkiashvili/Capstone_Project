@@ -1,0 +1,10 @@
+package com.capstoneProject.demo.security;
+
+
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+
+@EnableWebSecurity
+public class WebSecurity extends WebSecurityConfiguration {
+}
