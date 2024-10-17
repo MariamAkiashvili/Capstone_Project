@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <title>User Profile</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main>
+    <section class="profile-section">
+        <div class="profile">
+            <img th:src="@{/img/profile.png}" alt="Profile Picture"/>
+            <div class="profile-details">
+                <h2 th:text="${user.firstName} + ' ' + ${user.lastName}">Full Name</h2>
+                <div class="details">
+                    <p><span>Faculty:</span> <span th:text="${user.facultyName}"></span></p>
+                    <p><span>Study Year:</span> <span th:text="${user.currentStudyYear}"></span></p>
+                    <p><span>Email:</span> <span th:text="${user.email}"></span></p>
+                    <p>
+                        <span>
+                            <label for="phoneInput"></label>
+                            <input type="text" id="phoneInput" th:value="${user.phone}" class="btn" readonly>
+                        </span>
+                        <span>
+                            <button id="editButton" type="button" th:data-user-id="${user.userId}" class = "btn">
+                                <img th:src="@{/img/Pencil.png}" alt="edit"/>
+                            </button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const phoneInput = document.getElementById("phoneInput");
+      const editButton = document.getElementById("editButton");
+      let isEditing = false;
+
+      // Toggle editing mode for the phone input
+      function toggleEditing() {
+          if (isEditing) {
+              // Save the new phone number and disable editing
+              savePhoneNumber(phoneInput.value);
+              phoneInput.readOnly = true;
+              editButton.querySelector('img').src = '/img/Pencil.png';  // Change back to pencil icon
+          } else {
+              // Enable editing
+              phoneInput.readOnly = false;
+              phoneInput.focus();
+              editButton.querySelector('img').src = '/img/save-icon.png';  // Change to save icon
+          }
+          isEditing = !isEditing;
+      }
+
+      // Save phone number via AJAX call
+      function savePhoneNumber(phone) {
+          const userId = editButton.getAttribute('data-user-id');
+          console.log("User id: " +userId);
+          fetch(`/profile/update-phone?phone=${phone}&id=${userId}`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              }
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              return response.json();
+          })
+          .then(data => {
+              console.log("Phone number updated:", data);
+              // Optionally, display a success message or update the UI
+          })
+          .catch(error => {
+              console.error("Error updating phone number:", error);
+          });
+      }
+
+      // Event listener for the pencil button
+      editButton.addEventListener("click", toggleEditing);
+
+      // Event listener for the "Enter" key when editing the phone input
+      phoneInput.addEventListener("keypress", function (event) {
+          if (event.key === "Enter" && isEditing) {
+              toggleEditing();
+          }
+      });
+  });
+
+</script>
+
+</body>
+</html>

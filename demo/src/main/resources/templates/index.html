@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <title>University Library</title>
+
+  <script th:src="@{/js/script.js}" defer></script>
+
+  <script>
+    let isAuthenticated = [[${authenticated}]];
+
+    let userRoleCode = /*[[${userRoleCode}]]*/ '';
+    console.log("userRoleCode: " + userRoleCode);
+
+    console.log("isAuthenticated: " + isAuthenticated);
+
+    async function loadMaterials() {
+        console.log("Loading materials...");
+        try {
+            const response = await fetch('/material/public');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const materials = await response.json();
+            console.log("Materials fetched:", materials);
+            displayMaterials(materials);
+        } catch (error) {
+            console.error('Error fetching materials:', error);
+        }
+    }
+
+    function displayMaterials(materials) {
+        const cardsContainer = document.querySelector('.cards');
+        materials.forEach(material => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+                <span class="content">
+                    <img src="/img/calcullus.png" alt="${material.materialName}" />
+                    <p>${material.materialName}</p>
+                </span>
+                <span class="actions">
+                    <button class="btn">
+                      <img src="/img/Vision.png" alt="View" />
+                    </button>
+                    <button class="btn">
+                      <img src="/img/Export%20Pdf.png" alt="Download" style="pointer-events: none; opacity: 0.5;" />
+                    </button>
+                    <button class="details-btn btn">
+                      <img src="/img/Bulleted%20List.png" alt="Details" />
+                    </button>
+                </span>
+            `;
+            cardsContainer.appendChild(card);
+
+            // Attach event listener for the button
+            card.querySelector('.details-btn').addEventListener('click', function() {
+                handlePopup(material.materialName, material.universityUser.firstName + " " + material.universityUser.lastName,
+                material.materialUploadDate, material.description, material.link);
+            });
+        });
+        closeModal();
+    }
+
+    function openModal() {
+        console.log("Opening modal");
+        document.getElementById('loginModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+    window.onload = function () {
+        loadMaterials(); // Load materials
+        if (!isAuthenticated) {
+            openModal(); // Open the modal if not authenticated
+        }
+    };
+
+    function handleLogin(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                alert("Login failed. Please check your credentials.");
+            }
+        })
+        .catch(error => console.error('Error during login:', error));
+    }
+
+    function handlePopup(materialName, uploader, uploadDate, description, link) {
+        if (!isAuthenticated) {
+            openModal(); // Open login modal if not authenticated
+        } else {
+            openPopup(materialName, uploader, uploadDate, description, link); // Open details popup if authenticated
+        }
+    }
+
+    function openPopup(materialName, uploader, uploadDate, description, link) {
+        document.getElementById('bookTitle').textContent = materialName;
+        document.getElementById('uploaderName').textContent = uploader;
+        document.getElementById('uploadDate').textContent = uploadDate;
+        document.getElementById('bookDescription').textContent = description;
+        document.getElementById('link').textContent = link;
+        document.getElementById('bookDetailsPopup').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('bookDetailsPopup').style.display = 'none';
+    }
+
+    function closeUploadModal() {
+        document.getElementById('uploadModal').style.display = 'none';
+    }
+
+
+
+  </script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main>
+  <section>
+    <form>
+      <input type="text" placeholder="Search" />
+      <select>
+        <option value="(Choose Faculty)">(Choose Faculty)</option>
+      </select>
+      <select>
+        <option value="(Choose Course)">(Choose Course)</option>
+      </select>
+      <select>
+        <option value="">(Choose Lecturer)</option>
+      </select>
+      <select>
+        <option value="(Choose Group)">(Choose Group)</option>
+      </select>
+      <button type="submit">Submit</button>
+    </form>
+
+    <div class="cards"></div>
+  </section>
+
+  <div th:replace="fragments/login-modal :: loginModal"></div>
+
+  <div th:replace="fragments/book-details-popup :: bookDetailsPopup"></div>
+
+  <div th:replace="fragments/upload-modal :: uploadModal"></div>
+
+  <!-- Upload Button (Visible only if the user role is 'PROFESSOR') -->
+  <div th:if="${userRoleCode == 'PROFESSOR'}">
+      <button type="button" class = "btn" onclick="openUploadModal()">
+        <img th:src="@{/img/Vector.png}" alt="Upload" />
+      </button>
+  </div>
+
+</main>
+</body>
+
+</html>

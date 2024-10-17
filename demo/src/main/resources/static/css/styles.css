@@ -1,0 +1,362 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: sans-serif;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  color: #254682;
+  background-color: rgba(178, 203, 248, 1);
+}
+header h1 {
+  font-size: 24px;
+}
+header div,
+a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+header div:last-child {
+  gap: 3rem;
+}
+a {
+  text-decoration: none;
+  color: #254682;
+}
+main {
+  background-color: #f6f9ff;
+  position: relative;
+  min-height: 70vh;
+}
+section {
+  max-width: 90%;
+  margin: auto;
+  padding-top: 1rem;
+  display: grid;
+  grid-auto-rows: min-content;
+  gap: 3rem;
+  align-items: start;
+  background-color: white;
+  box-shadow: 0 8px 4px 0px rgba(0, 0, 0, 0.316);
+  min-height: 90vh;
+}
+form {
+  background-color: #b2cbf8;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-evenly;
+}
+form input,
+select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.578);
+  color: #254682;
+  border: 1px solid #25468291;
+  outline: none;
+}
+form select {
+  padding-right: 3rem;
+}
+form input::placeholder {
+  color: #254682;
+}
+form input {
+  background-image: url(img/Search.png);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  padding-left: 30px;
+}
+form button {
+  background-color: #254682;
+  color: #fcfdff;
+  border-radius: 8px;
+  padding: 0.5rem 3rem;
+  box-shadow: inset 0 2px 8px 0 rgba(0, 0, 0, 0.348);
+  border: none;
+}
+.cards {
+  padding: 0 2rem 1rem 2rem;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+.card {
+  background-color: #f6f9ff;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.347);
+  border-radius: 8px;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  font-size: 14px;
+}
+.card span {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.actions {
+  justify-self: right;
+}
+.actions img {
+  max-width: 30px;
+  max-height: 30px;
+}
+/*  */
+.profile-section {
+  max-width: 55%;
+  padding-top: 3rem;
+}
+main h2 {
+  font-size: 24px;
+  font-weight: normal;
+}
+.profile-section .profile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 0 0 0 5rem;
+  gap: 4rem;
+  color: #254682;
+}
+.profile-details {
+  padding-top: 1rem;
+  display: grid;
+  gap: 1rem;
+  font-size: 16px;
+}
+.details span {
+  color: #254682;
+}
+.details p {
+  color: #04235c;
+  padding: 10px 0;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.courses {
+  padding: 5rem;
+  color: #04235c;
+  display: grid;
+  gap: 2rem;
+}
+
+nav {
+  padding: 1rem 0;
+  display: flex;
+  background-color: #fcfdff;
+  box-shadow: inset 0 4px 2px 0px rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  color: #0b1f42;
+}
+ul {
+  list-style: none;
+  padding-top: 1rem;
+}
+li {
+  padding: 8px 0;
+  font-size: 14px;
+}
+.book-details {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.book-details > * {
+    margin-bottom: 15px;
+}
+
+.close {
+  display: flex;
+  align-items: self-start;
+  justify-content: space-between;
+}
+
+.book-details h3 {
+  font-size: 13px;
+}
+
+.book-details h4 {
+  font-weight: bold;
+}
+
+.book-details p,
+h4 {
+  font-size: 12px;
+  display: flex;
+  gap: 1rem;
+}
+
+.book-details span {
+  font-size: 14px;
+  display: flex;
+  gap: 1rem;
+  padding-right: 1rem;
+}
+
+.book-details-popup {
+    position: fixed;
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+form.log-in {
+  display: grid;
+  background-color: white;
+  padding: 1.9rem;
+  border-radius: 8px;
+  gap: 1.5rem;
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.312);
+  position: absolute;
+  inset-inline-end: 50%;
+  transform: translate(50%, 5%);
+}
+
+form.log-in div {
+  display: grid;
+  gap: 0.5rem;
+}
+form.log-in div input {
+  background-image: none;
+  border-radius: 4px;
+  min-width: 260px;
+}
+label {
+  font-size: 16px;
+}
+form.log-in button {
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 20px;
+}
+form.log-in .submit {
+  padding-top: 2rem;
+}
+form.log-in .submit p {
+  font-size: 14px;
+  color: #254682;
+}
+.upload {
+  display: flex;
+  justify-content: right;
+  padding: 0 2rem;
+  align-self: flex-end;
+}
+.upload img{
+    max-width: 40px;
+}
+.upload-file{
+  display: grid;
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  position: absolute;
+  inset-inline-end: 50%;
+  transform: translate(50%, 5%);
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.438);
+}
+.upload-file span{
+  color: red;
+}
+.upload-file .input{
+  display: grid;
+  min-width: 350px;
+  gap: 0.5rem;
+}
+.upload-file .input input{
+  background-image: none;
+  border-radius: 4px;
+  background-color: #f6f9ff;
+}
+.choose-group{
+  display: grid;
+}
+.choose-group .choices{
+  padding: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  background-color: #F6F9FF;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.578);
+  border: 1px solid #25468291;
+}
+.choose-group p{
+  background-color:#FCFDFF;
+  padding: 2px;
+}
+.choices label{
+  font-size: 14px;
+}
+input[type=file]{
+  display: none;
+}
+label.file{
+  background-color: #f6f9ff;
+  max-width: fit-content;
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.578);
+  border: 1px solid #25468291;
+  border-radius: 4px;
+}
+.upload-file button{
+  padding: 0.8rem ;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn{
+    background-color: transparent;
+    border: none;
+}
+.btn:hover,
+.btn:focus {
+  cursor: pointer;
+}

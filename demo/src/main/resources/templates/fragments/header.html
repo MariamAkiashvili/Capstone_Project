@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<header th:fragment="header">
+    <div>
+        <a th:href="@{/}">
+            <img th:src="@{/img/Homework.png}" alt="Home" />
+            <h1>University Library</h1>
+        </a>
+    </div>
+    <div>
+        <div>
+            <!-- Check if the user is authenticated -->
+            <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/profile/{id}(id=${#authentication.principal.id})}">
+                <img th:src="@{/img/Person.png}" alt="Profile" />
+                <!-- Display authenticated user's name -->
+                <p th:text="${#authentication.name}">User</p>
+            </a>
+
+            <!-- If user is not authenticated, show default "Person" -->
+            <a th:if="${#authorization.expression('!isAuthenticated()')}" th:href="@{/login}">
+                <img th:src="@{/img/Person.png}" alt="Login" />
+                <p>Person</p>
+            </a>
+        </div>
+
+        <!-- Logout option only when user is authenticated -->
+        <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/logout}">
+            <img th:src="@{/img/Logout.png}" alt="Logout" />
+        </a>
+    </div>
+</header>
+</body>
+</html>
