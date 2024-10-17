@@ -164,42 +164,56 @@ li {
   font-size: 14px;
 }
 .book-details {
-  position: absolute;
-  max-width: 400px;
-  inset-inline-end: 50%;
-  transform: translate(50%, 15%);
-  min-height: fit-content;
-  padding: 1.5rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.312);
-  color: #254682;
-  display: grid;
-  gap: 1rem;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
+.book-details > * {
+    margin-bottom: 15px;
+}
+
 .close {
   display: flex;
   align-items: self-start;
   justify-content: space-between;
 }
+
 .book-details h3 {
   font-size: 13px;
 }
+
 .book-details h4 {
   font-weight: bold;
 }
+
 .book-details p,
 h4 {
   font-size: 12px;
   display: flex;
   gap: 1rem;
 }
+
 .book-details span {
   font-size: 14px;
   display: flex;
   gap: 1rem;
   padding-right: 1rem;
 }
+
+.book-details-popup {
+    position: fixed;
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
 form.log-in {
   display: grid;
   background-color: white;
@@ -305,24 +319,23 @@ label.file{
 }
 
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  position: relative;
+  background-color: #fff;
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%;
 }
 
 .close {
@@ -336,5 +349,14 @@ label.file{
 .close:focus {
   color: black;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.btn{
+    background-color: transparent;
+    border: none;
+}
+.btn:hover,
+.btn:focus {
   cursor: pointer;
 }

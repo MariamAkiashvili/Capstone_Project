@@ -8,19 +8,31 @@
 <body>
 <header th:fragment="header">
     <div>
-        <a th:href="@{/index}">
+        <a th:href="@{/}">
             <img th:src="@{/img/Homework.png}" alt="Home" />
             <h1>University Library</h1>
         </a>
     </div>
     <div>
         <div>
-            <a th:href="@{/profile}">
+            <!-- Check if the user is authenticated -->
+            <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/profile/{id}(id=${#authentication.principal.id})}">
                 <img th:src="@{/img/Person.png}" alt="Profile" />
-                <p>Mariam Akiashvili</p>
+                <!-- Display authenticated user's name -->
+                <p th:text="${#authentication.name}">User</p>
+            </a>
+
+            <!-- If user is not authenticated, show default "Person" -->
+            <a th:if="${#authorization.expression('!isAuthenticated()')}" th:href="@{/login}">
+                <img th:src="@{/img/Person.png}" alt="Login" />
+                <p>Person</p>
             </a>
         </div>
-        <img th:src="@{/img/Logout.png}" alt="Logout" />
+
+        <!-- Logout option only when user is authenticated -->
+        <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/logout}">
+            <img th:src="@{/img/Logout.png}" alt="Logout" />
+        </a>
     </div>
 </header>
 </body>

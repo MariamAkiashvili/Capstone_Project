@@ -5,19 +5,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
     private UniversityUser user;
 
+    private String userRoleCode;
+
     public UserDetailsImpl(UniversityUser user) {
         this.user = user;
+        this.userRoleCode = user.getUserRole_code().getuserRoleCode();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // You can return authorities based on user roles, for now, returning null
-        return null;
+        return List.of(() -> "ROLE_" + userRoleCode);
     }
 
     @Override
@@ -28,6 +31,13 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return user.getEmail();
+    }
+    public Long getId() {
+        return user.getId();
+    }
+
+    public String getUserRoleCode() {
+        return this.userRoleCode;
     }
 
     @Override

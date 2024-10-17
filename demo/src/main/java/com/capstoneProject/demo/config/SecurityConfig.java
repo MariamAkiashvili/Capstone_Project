@@ -51,13 +51,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**", "/material/public").permitAll()
-                        .requestMatchers("/materials/**").hasAnyRole("STUDENT", "PROFESSOR")
+                        .requestMatchers("/materials/**", "/material/upload-material", "/material/upload").hasAnyRole("STUDENT", "PROFESSOR")
                         .requestMatchers("/university-users/**").hasAnyRole("PROFESSOR", "ADMIN", "STUDENT")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)

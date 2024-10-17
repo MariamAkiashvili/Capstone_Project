@@ -7,9 +7,10 @@ public class StudentAdditionalInfoConvertor {
     public static StudentAdditionalInfoDTO convertTo(StudentAdditionalInfo studentAdditionalInfo){
         StudentAdditionalInfoDTO studentAdditionalInfoDTO = new StudentAdditionalInfoDTO();
         studentAdditionalInfoDTO.setUniversityUser(UserConvertor.convertToDTO(studentAdditionalInfo.getUniversityUser()));
-        studentAdditionalInfoDTO.setCourse(CourseConvertor.convertTo(studentAdditionalInfo.getCourse()));
+        studentAdditionalInfoDTO.setFaculty(FacultyConventor.convertTo(studentAdditionalInfo.getFaculty()));
         studentAdditionalInfoDTO.setCurrentStudyYear(studentAdditionalInfo.getCurrentStudyYear());
         studentAdditionalInfoDTO.setHasActiveStatus(studentAdditionalInfo.getHasActiveStatus());
+        studentAdditionalInfoDTO.setPhone(studentAdditionalInfo.getPhone());
 
         return studentAdditionalInfoDTO;
     }

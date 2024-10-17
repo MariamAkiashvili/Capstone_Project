@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Modal</title>
+</head>
+<body>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal" th:fragment="loginModal">
+
+    <form action="/login" method="post" onsubmit="handleLogin(event)" class="log-in">
+        <div class="close">
+            <img th:src="@{/img/Multiply.png}" alt="Close" onclick="closeModal()"/>
+        </div>
+        <div>
+            <label for="username">Email</label>
+            <input type="text" name="username" required/>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" required/>
+        </div>
+        <div class="submit">
+            <button type="submit">Log In</button>
+            <p><a href="/forgot-password">Forgot Password?</a></p>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    function closeModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+    function openModal() {
+        document.getElementById('loginModal').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

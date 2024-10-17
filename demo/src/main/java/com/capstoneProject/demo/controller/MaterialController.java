@@ -43,24 +43,14 @@ public class MaterialController {
         return ResponseEntity.ok(materialPage);
     }
 
-//    @PostMapping("/upload-material")
-//    public ResponseEntity<MaterialDTO> uploadMaterial(@Validated @RequestBody MaterialDTO materialDTO,
-//                                                      @RequestParam(value = "file", required = false) MultipartFile file) {
-//        MaterialDTO uploadedMaterial = materialServiceImpl.uploadMaterial(materialDTO, file);
-//        if (uploadedMaterial == null) {
-//            return ResponseEntity.status(409).build();
-//        }
-//        return ResponseEntity.status(201).body(uploadedMaterial);
-//    }
 
     @PostMapping("/upload-material")
-    public ResponseEntity<MaterialDTO> uploadMaterial(@RequestParam(value = "materialName") String materialName,
-                                                      @RequestParam(value = "description") String description,
-                                                      @RequestParam(value = "universityUserId") Long universityUserId,
+    public ResponseEntity<MaterialDTO> uploadMaterial(@RequestParam("materialName") String materialName,
+                                                      @RequestParam("description") String description,
+                                                      @RequestParam("universityUserId") Long universityUserId,
                                                       @RequestParam(value = "link", required = false) String link,
                                                       @RequestParam(value = "isOnlineMaterial", defaultValue = "false") boolean isOnlineMaterial,
-                                                      @RequestParam("file") MultipartFile file) {
-
+                                                      @RequestParam(value = "file", required = false) MultipartFile file) {
 
         MaterialDTO materialDTO = new MaterialDTO();
         materialDTO.setMaterialName(materialName);
@@ -69,20 +59,29 @@ public class MaterialController {
         materialDTO.setIsOnlineMaterial(isOnlineMaterial);
         materialDTO.setLink(link);
 
-        // Create a UniversityUserDTO and set its ID
         UniversityUserDTO universityUserDTO = new UniversityUserDTO();
         universityUserDTO.setUniversityUserId(universityUserId);
         materialDTO.setUniversityUser(universityUserDTO);
 
-        // Upload the material and file
-        MaterialDTO uploadedMaterial = materialServiceImpl.uploadMaterial(materialDTO, file);
-        if (uploadedMaterial == null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 409 Conflict
+        if (!isOnlineMaterial && (file == null || file.isEmpty())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(uploadedMaterial); // 201 Created
+
+        MaterialDTO uploadedMaterial;
+
+
+        uploadedMaterial = materialServiceImpl.uploadMaterial(materialDTO, file);
+
+
+        if (uploadedMaterial == null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(uploadedMaterial);
 
     }
+
 
     @DeleteMapping("/delete-material/id/{id}")
     public ResponseEntity<Void> deleteMaterialById(@PathVariable long id) {
@@ -98,4 +97,14 @@ public class MaterialController {
         }
         return ResponseEntity.ok(materials);
     }
+
+    @PostMapping("upload")
+    public ResponseEntity<Void> upload(@RequestParam("file") MultipartFile file) {
+        System.out.println("get upload request");
+        return ResponseEntity.ok(null);
+    }
+
+
+
+
 }

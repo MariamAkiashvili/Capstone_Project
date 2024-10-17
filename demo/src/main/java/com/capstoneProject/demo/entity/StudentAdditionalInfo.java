@@ -7,13 +7,17 @@ import jakarta.persistence.*;
 public class StudentAdditionalInfo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "additional_info_id")
+    private long additionalInfoID;
+
     @OneToOne
     @JoinColumn(name = "university_user_id", referencedColumnName = "university_user_id")
     private UniversityUser universityUser;
 
     @ManyToOne
-    @JoinColumn(name = "course_code", referencedColumnName = "course_code", nullable = false)
-    private Course course;
+    @JoinColumn(name = "faculty_code", referencedColumnName = "faculty_code", nullable = false)
+    private Faculty faculty;
 
     @Column(name = "has_active_status")
     private boolean hasActiveStatus;
@@ -21,6 +25,8 @@ public class StudentAdditionalInfo {
     @Column (name = "current_study_year")
     private int currentStudyYear;
 
+    @Column(name = "phone")
+    private String phone;
 
     public UniversityUser getUniversityUser() {
         return universityUser;
@@ -30,12 +36,12 @@ public class StudentAdditionalInfo {
         this.universityUser = universityUser;
     }
 
-    public Course getCourse() {
-        return course;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public boolean getHasActiveStatus() {
@@ -52,5 +58,25 @@ public class StudentAdditionalInfo {
 
     public void setCurrentStudyYear(int currentStudyYear) {
         this.currentStudyYear = currentStudyYear;
+    }
+
+    public long getAdditionalInfoID() {
+        return additionalInfoID;
+    }
+
+    public void setAdditionalInfoID(long additionalInfoID) {
+        this.additionalInfoID = additionalInfoID;
+    }
+
+    public boolean isHasActiveStatus() {
+        return hasActiveStatus;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

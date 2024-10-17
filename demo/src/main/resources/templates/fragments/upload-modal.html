@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Modal</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover, .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .input, .choose-group {
+            margin-bottom: 15px;
+        }
+        /* File preview styles */
+        .file-preview {
+            margin-top: 10px;
+            display: none;
+        }
+        .file-preview span {
+            font-size: 16px;
+        }
+        .remove-file {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+    </style>
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+
+<!-- Upload Button to trigger modal -->
+<button id="openUploadModalButton">Upload File</button>
+
+<!-- Modal Structure -->
+<div id="uploadModal" class="modal" th:fragment="uploadModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeUploadModal()">&times;</span>
+        <h2>Upload File</h2>
+<!--        <form action="#" class="upload-file" id="uploadForm">-->
+        <form method="post" th:action="@{material/upload-material}" enctype="multipart/form-data" class="upload-file" id="uploadForm">
+            <div class="input">
+                <label for="fileName">File Name <span>*</span></label>
+                <input type="text" id="fileName" required/>
+            </div>
+            <div class="input">
+                <label for="description">Description <span>*</span></label>
+                <input type="text" id="description" required/>
+            </div>
+            <div class="choose-group">
+                <label for="groupContainer">Group <span>*</span></label>
+                <div id="groupContainer" class="choices">
+                    <p>Loading groups...</p>
+                </div>
+            </div>
+            <div class="input">
+                <label for="file" class="file">
+                    <img th:src="@{/img/FileArrowUp.png}" alt="upload"/> Choose File
+                </label>
+                <input type="file" id="file" name="file" required style="display:none;"/>
+                <div class="file-preview" id="filePreview">
+                    <span id="selectedFileName"></span>
+                    <span class="remove-file" onclick="removeFile()">X</span>
+                </div>
+            </div>
+            <div class="input">
+                <h>Or</h>
+                <label for="fileLink">File Link</label>
+                <input type="text" id="fileLink">
+            </div>
+<!--            <button type="button" onclick="uploadMaterial()">Upload</button>-->
+            <button type="submit" >Upload</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const uploadButton = document.getElementById('openUploadModalButton');
+    const fileInput = document.getElementById('file');
+
+    uploadButton.addEventListener('click', () => {
+        openUploadModal();
+    });
+
+    // Attach the event listener for file input using JavaScript
+    fileInput.addEventListener('change', handleFileSelect);
+
+    // Function to handle file selection
+    function handleFileSelect(event) {
+        const fileInput = event.target;
+        const filePreview = document.getElementById('filePreview');
+        const selectedFileName = document.getElementById('selectedFileName');
+        const file = fileInput.files[0];
+
+        if (file) {
+            selectedFileName.textContent = file.name;
+            filePreview.style.display = 'block';  // Show the preview section
+        }
+    }
+
+    // Function to remove the selected file
+    function removeFile() {
+        const fileInput = document.getElementById('file');
+        const filePreview = document.getElementById('filePreview');
+        const selectedFileName = document.getElementById('selectedFileName');
+
+        // Clear the input and hide the preview
+        fileInput.value = '';
+        selectedFileName.textContent = '';
+        filePreview.style.display = 'none';
+    }
+
+    async function loadGroups() {
+        console.log("Trying to fetch groups...");
+        try {
+            const response = await fetch('/group/all');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const groups = await response.json();
+            console.log("Groups fetched:", groups);
+            populateGroups(groups);
+        } catch (error) {
+            console.error('Error fetching groups:', error);
+            document.getElementById('groupContainer').innerHTML = '<p>Error loading groups.</p>';
+        }
+    }
+
+    function populateGroups(groups) {
+        const groupContainer = document.getElementById('groupContainer');
+        groupContainer.innerHTML = ''; // Clear previous content
+
+        groups.forEach(group => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <input type="checkbox" name="group" id="group_${group.id}" value="${group.name}" />
+                <label for="group_${group.id}">${group.name}</label>
+            `;
+            groupContainer.appendChild(div);
+        });
+    }
+
+    function openUploadModal() {
+        loadGroups(); // Load groups when the modal is opened
+        document.getElementById('uploadModal').style.display = 'block';
+    }
+
+    function closeUploadModal() {
+        document.getElementById('uploadModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

@@ -71,4 +71,8 @@ public class UniversityUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setUniversityUserId(long l) {
+        this.universityUserId = l;
+    }
 }

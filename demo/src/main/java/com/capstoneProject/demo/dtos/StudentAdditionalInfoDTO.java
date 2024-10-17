@@ -1,10 +1,12 @@
 package com.capstoneProject.demo.dtos;
 
 public class StudentAdditionalInfoDTO {
+    private long additionalInfoId;
     private UniversityUserDTO universityUser;
-    private CourseDTO course;
+    private FacultyDTO faculty;
     private boolean hasActiveStatus;
     private int currentStudyYear;
+    private String phone;
 
     public UniversityUserDTO getUniversityUser() {
         return universityUser;
@@ -14,12 +16,12 @@ public class StudentAdditionalInfoDTO {
         this.universityUser = universityUser;
     }
 
-    public CourseDTO getCourse() {
-        return course;
+    public FacultyDTO getFaculty() {
+        return faculty;
     }
 
-    public void setCourse(CourseDTO course) {
-        this.course = course;
+    public void setFaculty(FacultyDTO faculty) {
+        this.faculty = faculty;
     }
 
     public boolean isHasActiveStatus() {
@@ -36,5 +38,21 @@ public class StudentAdditionalInfoDTO {
 
     public void setCurrentStudyYear(int currentStudyYear) {
         this.currentStudyYear = currentStudyYear;
+    }
+
+    public long getAdditionalInfoId() {
+        return additionalInfoId;
+    }
+
+    public void setAdditionalInfoId(long additionalInfoId) {
+        this.additionalInfoId = additionalInfoId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
